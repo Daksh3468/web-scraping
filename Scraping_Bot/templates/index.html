@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>News</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+</head>
+<style>
+  .card {
+    width: 18rem;
+    margin-bottom: 20px;
+    margin: 20px;
+    padding: 10px;
+  }
+
+  .card-img-top {
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .card-body {
+    text-align: center;
+  }
+
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    background-color: white;
+    padding: 12px;
+    z-index: 1;
+    right: 0;
+    /* Move the dropdown content to the right */
+    border: 2px solid black;
+    /* Add border to the dropdown */
+    border-radius: 10px;
+    text-align: center;
+
+  }
+
+  .dropdown-content a {
+    display: block;
+    color: black;
+    /* Set the desired color for dropdown links */
+    text-decoration: none;
+    /* Remove underline from dropdown links */
+
+  }
+
+  .dropdown:hover .dropdown-content {
+    display: block;
+    color: black;
+  }
+
+  .nav a {
+    color: white;
+  }
+
+  .news-card {
+    height: 421px;
+    width: 480px;
+    position: absolute;
+    border: 2px solid black;
+    border-radius: 25px;
+  }
+
+  .news-card img {
+    position: absolute;
+    width: 456px;
+    height: 254px;
+    left: 33px;
+    border-radius: 25px;
+  }
+
+  .news-card p {
+    position: absolute;
+    width: 437px;
+    height: 106px;
+
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 39px;
+
+    color: #000000;
+  }
+</style>
+
+<body>
+
+
+  <nav class="navbar bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="{{ url_for('static', filename='images/download.jpg') }}" alt="Logo" style="  height: 50px;
+        width: 55px;
+        left: 17px;
+        top: 5px;
+        ">
+        NewzBy
+      </a>
+      <div style="display: flex;">
+        <div id="myDiv" style="margin-top: 5%; margin-right: 10px;"></div>
+
+        <div class="dropdown">
+          <img src="{{ url_for('static', filename='images/account.png') }}" alt="Image" class="image" style="height: 50px; width: 55px; left: 17px; top: 5px;">
+
+          <div class="dropdown-content">
+            <a href="#">My Account</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </nav>
+
+  <nav class="nav" style="background: radial-gradient(circle,#005899,#0085FF  );">
+    <a class="nav-link" href="#">World</a>
+    <a class="nav-link" href="#">India</a>
+    <a class="nav-link" href="#">Gujarat</a>
+    <a class="nav-link" href="#">Sports</a>
+    <a class="nav-link" href="#">Entertainment</a>
+    <a class="nav-link" href="#">Lifestyle</a>
+    <a class="nav-link" href="#">Business</a>
+  </nav>
+
+  <div class="row" style="margin: 20px; padding: 10px;">
+    {% for news_item in news_data %}
+    <div class="col-md-4" style="display: contents;">
+      <div class="card">
+        <img src="{{ news_item[1] }}" class="card-img-top" alt="News Image">
+        <div class="card-body">
+          <h5 class="card-title">{{ news_item[0] }}</h5>
+          <a href="{{ news_item[2] }}" class="btn btn-primary">Read More</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+    crossorigin="anonymous"></script>
+  <script>
+    function showDateTime() {
+      var myDiv = document.getElementById("myDiv");
+
+      var date = new Date();
+      var dayList = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+      var monthNames = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+      ];
+      var dayName = dayList[date.getDay()];
+      var monthName = monthNames[date.getMonth()];
+      var today = `${dayName}, ${monthName} ${date.getDate()}, ${date.getFullYear()}`;
+
+      var hour = date.getHours();
+      var min = date.getMinutes();
+
+      var ampm = hour >= 12 ? "PM" : "AM";
+      hour = hour % 12;
+      hour = hour ? hour : 12;
+      min = min < 10 ? "0" + min : min;
+
+      var time = hour + ":" + min + " " + ampm;
+      myDiv.innerText = `${today} ${time}`;
+    }
+
+    setInterval(showDateTime, 1000);
+
+  </script>
+
+</body>
+
+</html>
